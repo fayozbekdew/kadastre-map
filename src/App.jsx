@@ -1,4 +1,4 @@
-import UserPage from "./pages/userPage"
+import UserPage from "./pages/UserPage"
 import Header from "./sections/Header"
 import MapEl from "./sections/Map"
 
