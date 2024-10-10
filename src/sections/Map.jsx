@@ -31,7 +31,7 @@ const MapEl = ({ searchEl }) => {
   console.log(searchEl)
   return (
     <YMaps query={{ apikey: "59877cbf-2654-4cfc-b2bc-626e1807065f" }}>
-      {searchEl?.cadastralNumber !== undefined ? (
+      {searchEl.length > 0  ? (
         <div className="flex flex-col rounded-md p-2 w-[330px] max-w-full h-[85%] absolute left-3 bottom-3 z-10 bg-[#548de7]">
           <h1 className="mx-auto text-white text-[20px] font-bold">
             About Object
