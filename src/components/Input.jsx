@@ -43,7 +43,7 @@ function Input({ placeholder, type, label, img, width, height, setSearchEl }) {
         )}
         <input
           onChange={(e) => filteredFn(e.target.value)}
-          className={`max-w-full w-[${width}] h-[${height}]  rounded-md pl-3 text-[20px] outline-none border border-black backdrop-blur-sm bg-white/30`}
+          className={`max-w-full w-[1000px] h-[${height}]  rounded-md pl-3 text-[20px] outline-none border border-black backdrop-blur-sm bg-white/30`}
           type={type}
           placeholder={placeholder}
         />
