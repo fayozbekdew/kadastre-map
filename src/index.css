@@ -1,6 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.ymaps-2-1-79-controls-pane {
-    z-index: 9999 !important;
+
+  .zoom-buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 40%;
+    right: 30px;
+    z-index: 1000;
   }
+  
+  .zoom-buttons button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 50px;
+    padding: 10px;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .zoom-buttons button:hover {
+    background-color: #f0f0f0;
+  }
+  
