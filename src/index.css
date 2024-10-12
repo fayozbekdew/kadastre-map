@@ -26,4 +26,17 @@
   .zoom-buttons button:hover {
     background-color: #f0f0f0;
   }
-  
+
+  /* map-input */
+  .map-input{
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: transparent;
+    height: 60px;
+    width: 500px;
+    /* Kengroq qilish */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
