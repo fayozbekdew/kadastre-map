@@ -4,7 +4,6 @@ import Input from "../components/Input";
 import Modal from "react-modal";
 import { CloseBtn } from "../assets";
 import OTPInput from "react-otp-input";
-import UserPage from "../pages/userPage";
 import { useNavigate } from "react-router-dom";
 Modal.setAppElement("#root");
 
@@ -14,8 +13,7 @@ function Header({ setSearchEl, setPlaces }) {
   const navigate = useNavigate();
   if (otp.length === 6 && otp === "123456") {
     navigate("/add");
-  }else if(otp.length === 6 && otp !== "123456"){
-    
+  } else if (otp.length === 6 && otp !== "123456") {
   }
   const openModal = (place) => {
     setModalIsOpen(true);
@@ -71,7 +69,7 @@ function Header({ setSearchEl, setPlaces }) {
             backgroundColor: "gray",
             borderRadius: "10px",
             border: "1px solid #ccc",
-            display:'flex',
+            display: "flex",
             alignItems: "center",
             justifyContent: "center",
           },
@@ -83,15 +81,21 @@ function Header({ setSearchEl, setPlaces }) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
       >
-          <OTPInput
-            value={otp}
-            onChange={setOtp}
-            numInputs={6}
-            renderSeparator={<span></span>}
-            renderInput={(props) => <input className="" {...props} />}
-            inputStyle="!w-[50px] h-[50px] mx-2 border-2 border-gray-300 rounded-md text-center text-lg"
-          />
-          <p className={`${otp.length === 6 && otp !== "123456" ? "block" : "hidden"} text-red-500 absolute bottom-10 text-[20px] font-semibold`}>Kod xato </p>
+        <OTPInput
+          value={otp}
+          onChange={setOtp}
+          numInputs={6}
+          renderSeparator={<span></span>}
+          renderInput={(props) => <input className="" {...props} />}
+          inputStyle="!w-[50px] h-[50px] mx-2 border-2 border-gray-300 rounded-md text-center text-lg"
+        />
+        <p
+          className={`${
+            otp.length === 6 && otp !== "123456" ? "block" : "hidden"
+          } text-red-500 absolute bottom-10 text-[20px] font-semibold`}
+        >
+          Kod xato{" "}
+        </p>
         <button onClick={closeModal}>
           <img
             src={CloseBtn}
