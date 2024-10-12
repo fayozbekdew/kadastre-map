@@ -4,7 +4,7 @@ import Input from "../components/Input";
 
 function Header({ setSearchEl }) {
   return (
-    <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-center justify-center gap-x-2">
+    <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-start justify-center gap-x-2">
       <Input
         placeholder="Search with kadastre number"
         type="text"

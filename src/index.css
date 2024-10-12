@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.ymaps-2-1-79-controls-pane {
+    z-index: 9999 !important;
+  }

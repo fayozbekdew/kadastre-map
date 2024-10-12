@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { data } from "../../data/data";
 
 function Input({ placeholder, type, label, img, width, height, setSearchEl }) {
-  const [search, setSearch] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
   function filteredFn(kadastreNumber) {
-    const filterObg = data.filter(obj => obj.cadastralNumber === kadastreNumber )
-    setSearchEl(filterObg);
+    if (kadastreNumber != "") {
+      setSearchEl([])
+        const newData = data.filter((obg) =>
+        obg.cadastralNumber.includes(kadastreNumber)
+      );
+      setFilteredList(newData);
+    } else {
+      setSearchEl([]);
+      setFilteredList([]);
+    }
   }
-  console.log(search);
   if (label != null) {
     return (
       <label className={` relative flex items-start flex-col gap-y-1`}>
@@ -47,6 +54,22 @@ function Input({ placeholder, type, label, img, width, height, setSearchEl }) {
           type={type}
           placeholder={placeholder}
         />
+        {/* bg-white/30 */}
+        {filteredList.length > 0 && (
+          <ul className="bg-white/30 backdrop-blur-sm border-2 border-gray-400">
+            {filteredList.map((obj) => (
+              <li
+                onClick={() => {
+                  setSearchEl([obj]), setFilteredList([]);
+                }}
+                key={crypto.randomUUID()}
+                className="border-b-2 border-gray-400 py-1 pl-4 hover:cursor-pointer "
+              >
+                {obj.cadastralNumber}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     );
   }

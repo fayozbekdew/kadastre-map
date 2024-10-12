@@ -1,12 +1,13 @@
-import { SearchImg, StoryImg } from "../src/assets";
+import { Exsample, SearchImg, StoryImg } from "../src/assets";
 
 export const data = [
     {
       id: 1,
+      img: Exsample,
       coordinates: [55.711572, 37.773856],
       title: "Object 1",
       icon: SearchImg,
-      cadastralNumber: "50:46:0040101:1",
+      cadastralNumber: "69:10:1000021:1758",
       status: "Active",
       landCategory: "Residential",
       cadastralCost: "150,000 USD",
@@ -17,6 +18,7 @@ export const data = [
     },
     {
       id: 2,
+      img: Exsample,
       coordinates: [55.622571, 37.373856],
       title: "Object 2",
       icon: StoryImg,
@@ -31,6 +33,7 @@ export const data = [
     },
     {
       id: 3,
+      img: Exsample,
       coordinates: [55.83358, 37.473856],
       title: "Object 3",
       icon: SearchImg,
@@ -45,6 +48,7 @@ export const data = [
     },
     {
       id: 4,
+      img: Exsample,
       coordinates: [55.704575, 37.573856],
       title: "Object 4",
       icon: SearchImg,
@@ -59,6 +63,7 @@ export const data = [
     },
     {
       id: 5,
+      img: Exsample,
       coordinates: [55.755579, 37.573856],
       title: "Object 5",
       icon: StoryImg,
