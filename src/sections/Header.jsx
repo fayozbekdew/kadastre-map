@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { data } from "../../data/data";
 import Input from "../components/Input";
 import Modal from "react-modal";
 import { CloseBtn } from "../assets";
 import OTPInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 Modal.setAppElement("#root");
 
-function Header({ setSearchEl, setPlaces }) {
+function Header({ setSearchEl, setPlaces,places }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function Header({ setSearchEl, setPlaces }) {
     navigate("/add");
   } else if (otp.length === 6 && otp !== "123456") {
   }
-  const openModal = (place) => {
+  const openModal = () => {
     setModalIsOpen(true);
   };
 
@@ -24,15 +24,25 @@ function Header({ setSearchEl, setPlaces }) {
   };
   function selectStatus(stat) {
     if (stat === "все") {
-      setPlaces(data);
+      const fetchObjects = async () => {
+        const { data, error } = await supabase.from("objects").select("*");
+    
+        if (error) {
+          console.error("Error fetching objects:", error);
+        } else {
+          setPlaces(data);
+        }
+      };
+      fetchObjects();
       return;
     }
-    const status = data.filter((obg) => obg.status === stat);
+    const status = places.filter((obg) => obg.status === stat);
     setPlaces(status);
   }
   return (
     <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-start justify-center gap-x-2">
       <Input
+       places={places}
         placeholder="Search with kadastre number"
         type="text"
         width="1000px"
@@ -47,7 +57,7 @@ function Header({ setSearchEl, setPlaces }) {
           Все
         </option>
         <option value="ранее учтенний">Ранее учтенний</option>
-        <option value="учтенний">Ранее учтенний</option>
+        <option value="учтенний">учтенний</option>
       </select>
       <button
         onClick={() => openModal()}

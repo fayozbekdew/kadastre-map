@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { YMaps, Map, Placemark, TypeSelector } from "react-yandex-maps";
-import { CloseBtn, SearchImg, StoryImg } from "../assets";
+import { CloseBtn, Marker, SearchImg, StoryImg } from "../assets";
 import Modal from "react-modal";
 import { data } from "../../data/data";
 
@@ -15,11 +15,11 @@ const MapEl = ({ searchEl, setSearchEl,places }) => {
   // Obyektlar ma'lumotlari (taxminiy 5 ta obyekt)
   
   const [zoom, setZoom] = useState(10);
+  console.log(places);
 
   const handleZoomIn = () => {
     setZoom((prevZoom) => Math.min(prevZoom + 1, 18)); // Maksimal zoom darajasi 18
   };
-console.log(zoom)
   const handleZoomOut = () => {
     setZoom((prevZoom) => Math.max(prevZoom - 1, 0)); // Minimal zoom darajasi 0
   };
@@ -65,14 +65,24 @@ console.log(zoom)
           <h1 className="mx-auto text-white text-[20px] font-bold">
             About Object
           </h1>
-          <img src={searchEl[0]?.img} className="w-full h-[150px]" alt="" />
-          <h2>{searchEl[0]?.title}</h2>
-          <p>{searchEl[0]?.cadastralNumber}</p>
-          <p>coordinates: {searchEl[0]?.coordinates}</p>
-          <p>status: {searchEl[0]?.status}</p>
-          <p>cadastralCost: {searchEl[0]?.cadastralCost}</p>
-          <p>address:{searchEl[0]?.address}</p>
-          <p>area: {searchEl[0]?.area}</p>
+          <h2 className="text-center font-bold text-[18px] pb-2 ">Земельный участок: {searchEl[0]?.kadastreNumber}</h2>
+        <hr />
+        <div className="flex flex-col gap-y-2 mt-2">
+        <span className="font-bold flex items-center gap-x-2">Тип: <p className="font-normal">{searchEl[0]?.type}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровый номер:  <p className="font-normal">{searchEl[0]?.kadastreNumber}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровый квартал: <p className="font-normal">{searchEl[0]?.kadastreKvartal}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Адрес: <p className="font-normal">{searchEl[0]?.adress}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Площадь уточненная: <p className="font-normal">{searchEl[0]?.areaAdjusted}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Статус: <p className="font-normal">{searchEl[0]?.status}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Категория земель: <p className="font-normal">{searchEl[0]?.category}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Разрешенное использование: <p className="font-normal">{searchEl[0]?.useArea}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Форма собственности: <p className="font-normal">{searchEl[0]?.ownership}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровая стоимость: <p className="font-normal">{searchEl[0]?.kadasteValue}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата определения: <p className="font-normal">{searchEl[0]?.dateDetermination}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата утверждения: <p className="font-normal">{searchEl[0]?.approvaDate}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата внесения сведений: <p className="font-normal">{searchEl[0]?.enteringDate}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата применения: <p className="font-normal">{searchEl[0]?.dateApplication}</p></span>
+        </div>
         </div>
       ) : null}
       <Map
@@ -100,11 +110,11 @@ console.log(zoom)
           <Placemark
             onClick={() => openModal(place)}
             key={place.id}
-            geometry={place.coordinates}
-            properties={{ balloonContent: place.title }}
+            geometry={place.koordinate}
+            properties={{ balloonContent: place.type }}
             options={{
               iconLayout: "default#image",
-              iconImageHref: place.icon, // Bu yerda obyektning maxsus rasmini joylashtiramiz
+              iconImageHref: Marker, // Bu yerda obyektning maxsus rasmini joylashtiramiz
               iconImageSize: [30, 42], // Rasmning o'lchami (o'zingiz moslashtirishingiz mumkin)
               iconImageOffset: [-15, -42], // Marker pozitsiyasi (sozlash uchun)
             }}
@@ -138,14 +148,25 @@ console.log(zoom)
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
       >
-        <img src={selectedPlace?.img} className="w-full h-[150px]" alt="" />
-        <h2>{selectedPlace?.title}</h2>
-        <p>{selectedPlace?.cadastralNumber}</p>
-        <p>coordinates: {selectedPlace?.coordinates}</p>
-        <p>status: {selectedPlace?.status}</p>
-        <p>cadastralCost: {selectedPlace?.cadastralCost}</p>
-        <p>address:{selectedPlace?.address}</p>
-        <p>area: {selectedPlace?.area}</p>
+        {/* <img src={selectedPlace?.img} className="w-full h-[150px]" alt="" /> */}
+        <h2 className="text-center font-bold text-[18px] pb-2 ">Земельный участок: {selectedPlace?.kadastreNumber}</h2>
+        <hr />
+        <div className="flex flex-col gap-y-2 mt-2">
+        <span className="font-bold flex items-center gap-x-2">Тип: <p className="font-normal">{selectedPlace?.type}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровый номер:  <p className="font-normal">{selectedPlace?.kadastreNumber}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровый квартал: <p className="font-normal">{selectedPlace?.kadastreKvartal}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Адрес: <p className="font-normal">{selectedPlace?.adress}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Площадь уточненная: <p className="font-normal">{selectedPlace?.areaAdjusted}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Статус: <p className="font-normal">{selectedPlace?.status}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Категория земель: <p className="font-normal">{selectedPlace?.category}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Разрешенное использование: <p className="font-normal">{selectedPlace?.useArea}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Форма собственности: <p className="font-normal">{selectedPlace?.ownership}</p></span>
+        <span className="font-bold flex items-center gap-x-2">Кадастровая стоимость: <p className="font-normal">{selectedPlace?.kadasteValue}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата определения: <p className="font-normal">{selectedPlace?.dateDetermination}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата утверждения: <p className="font-normal">{selectedPlace?.approvaDate}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата внесения сведений: <p className="font-normal">{selectedPlace?.enteringDate}</p></span>
+        <span className="font-bold flex items-center gap-x-2">дата применения: <p className="font-normal">{selectedPlace?.dateApplication}</p></span>
+        </div>
         <button onClick={closeModal}>
           <img
             src={CloseBtn}

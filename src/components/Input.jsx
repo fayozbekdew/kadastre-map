@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { data } from "../../data/data";
 
-function Input({ placeholder, type, label, img, width, height, setSearchEl }) {
+function Input({ placeholder, type, label, img, width, height, setSearchEl, places }) {
   const [filteredList, setFilteredList] = useState([]);
   function filteredFn(kadastreNumber) {
     if (kadastreNumber != "") {
       setSearchEl([])
-        const newData = data.filter((obg) =>
-        obg.cadastralNumber.includes(kadastreNumber)
+        const newData = places.filter((obg) =>
+        obg.kadastreNumber.includes(kadastreNumber)
       );
       setFilteredList(newData);
     } else {
@@ -65,7 +65,7 @@ function Input({ placeholder, type, label, img, width, height, setSearchEl }) {
                 key={crypto.randomUUID()}
                 className="border-b-2 border-gray-400 py-1 pl-4 hover:cursor-pointer "
               >
-                {obj.cadastralNumber}
+                {obj.kadastreNumber}
               </li>
             ))}
           </ul>
