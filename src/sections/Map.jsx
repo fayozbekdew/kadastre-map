@@ -6,7 +6,7 @@ import { data } from "../../data/data";
 
 Modal.setAppElement("#root");
 
-const MapEl = ({ searchEl }) => {
+const MapEl = ({ searchEl,setSearchEl }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [searchObj, setSearchObj] = useState({});
@@ -28,19 +28,39 @@ const MapEl = ({ searchEl }) => {
     // Bu yerda siz obyektlarni API orqali dinamik ravishda olasiz
     // Masalan: fetch('/api/objects').then((response) => setPlaces(response.data));
   }, []);
-  console.log(searchEl)
   return (
     <YMaps query={{ apikey: "59877cbf-2654-4cfc-b2bc-626e1807065f" }}>
-      {searchEl.length > 0  ? (
-        <div className="flex flex-col rounded-md p-2 w-[330px] max-w-full h-[85%] absolute left-3 bottom-3 z-10 bg-[#548de7]">
+      {searchEl.length > 0 ? (
+        <div className="flex flex-col rounded-md text-white p-2 w-[330px] max-w-full h-[85%] absolute left-3 bottom-3 z-10 bg-[#548de7]">
+          <button onClick={() => setSearchEl([])}>
+            <img
+              src={CloseBtn}
+              width="20px"
+              height={"20px"}
+              className="absolute top-2 right-2"
+            />
+          </button>
           <h1 className="mx-auto text-white text-[20px] font-bold">
             About Object
           </h1>
+          <img src={searchEl[0]?.img} className='w-full h-[150px]' alt="" />
+          <h2>{searchEl[0]?.title}</h2>
+          <p>{searchEl[0]?.cadastralNumber}</p>
+          <p>coordinates: {searchEl[0]?.coordinates}</p>
+          <p>status: {searchEl[0]?.status}</p>
+          <p>cadastralCost: {searchEl[0]?.cadastralCost}</p>
+          <p>address:{searchEl[0]?.address}</p>
+          <p>area: {searchEl[0]?.area}</p>
         </div>
       ) : null}
       <Map
         defaultState={{ center: [55.751574, 37.573856], zoom: 10 }}
         className="w-full h-full"
+        options={{
+          zoomControlSize: "large",
+          zoomControlPosition: { top: 0, right: 0 },
+        }}
+        controls={["zoomControl", "default"]}
       >
         {places.map((place) => (
           <Placemark
@@ -69,15 +89,17 @@ const MapEl = ({ searchEl }) => {
             transform: "translate(-50%, -50%)",
             width: "400px",
             height: "500px",
-            padding: "20px",
+            padding: "20px 20px 20px 20px",
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.7)", // Modal fon rangini o'zgartirish
+            zIndex: "9999",
           },
         }}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
       >
+        <img src={selectedPlace?.img} className='w-full h-[150px]' alt="" />
         <h2>{selectedPlace?.title}</h2>
         <p>{selectedPlace?.cadastralNumber}</p>
         <p>coordinates: {selectedPlace?.coordinates}</p>
