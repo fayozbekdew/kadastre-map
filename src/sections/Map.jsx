@@ -6,13 +6,23 @@ import { data } from "../../data/data";
 
 Modal.setAppElement("#root");
 
-const MapEl = ({ searchEl,setSearchEl }) => {
+const MapEl = ({ searchEl, setSearchEl }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
   const [searchObj, setSearchObj] = useState({});
   const [searchList, setSearchList] = useState([]);
   // Obyektlar ma'lumotlari (taxminiy 5 ta obyekt)
   const [places, setPlaces] = useState(data);
+  const [zoom, setZoom] = useState(10);
+
+  const handleZoomIn = () => {
+    setZoom((prevZoom) => Math.min(prevZoom + 1, 18)); // Maksimal zoom darajasi 18
+  };
+console.log(zoom)
+  const handleZoomOut = () => {
+    setZoom((prevZoom) => Math.max(prevZoom - 1, 0)); // Minimal zoom darajasi 0
+  };
 
   const openModal = (place) => {
     setSelectedPlace(place);
@@ -23,6 +33,18 @@ const MapEl = ({ searchEl,setSearchEl }) => {
     setModalIsOpen(false);
     setSelectedPlace(null);
   };
+  useEffect(() => {
+    // Foydalanuvchining joylashuvini aniqlash
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation([latitude, longitude]); // joylashuvni saqlaymiz
+      },
+      (error) => {
+        console.error("Geolocation xatoligi:", error);
+      }
+    );
+  }, []);
   // Yangi obyektlarni API'dan olish (simulatsiya qilinmoqda)
   useEffect(() => {
     // Bu yerda siz obyektlarni API orqali dinamik ravishda olasiz
@@ -43,7 +65,7 @@ const MapEl = ({ searchEl,setSearchEl }) => {
           <h1 className="mx-auto text-white text-[20px] font-bold">
             About Object
           </h1>
-          <img src={searchEl[0]?.img} className='w-full h-[150px]' alt="" />
+          <img src={searchEl[0]?.img} className="w-full h-[150px]" alt="" />
           <h2>{searchEl[0]?.title}</h2>
           <p>{searchEl[0]?.cadastralNumber}</p>
           <p>coordinates: {searchEl[0]?.coordinates}</p>
@@ -54,14 +76,26 @@ const MapEl = ({ searchEl,setSearchEl }) => {
         </div>
       ) : null}
       <Map
-        defaultState={{ center: [55.751574, 37.573856], zoom: 10 }}
+        state={{ center: [55.751574, 37.573856], zoom: zoom }}
         className="w-full h-full"
         options={{
-          zoomControlSize: "large",
-          zoomControlPosition: { top: 0, right: 0 },
-        }}
-        controls={["zoomControl", "default"]}
+            searchControl: 'none',
+            zoomControl: 'default', // Standart zoom control'ni o'chirib qo'ying
+          }}
       >
+        {userLocation && (
+          <Placemark
+            geometry={userLocation} // Foydalanuvchining joylashuvi
+            properties={{ balloonContent: "Sizning joylashuvingiz" }}
+            options={{
+              iconLayout: "default#image",
+              iconImageHref:
+                "https://img.icons8.com/ios-filled/50/000000/marker.png", // Marker rasmi
+              iconImageSize: [20, 20],
+              iconImageOffset: [-15, -15],
+            }}
+          />
+        )}
         {places.map((place) => (
           <Placemark
             onClick={() => openModal(place)}
@@ -77,6 +111,10 @@ const MapEl = ({ searchEl,setSearchEl }) => {
           />
         ))}
       </Map>
+      <div className="zoom-buttons">
+        <button onClick={handleZoomIn}>+</button>
+        <button onClick={handleZoomOut}>-</button>
+      </div>
       {/* Modal */}
       <Modal
         style={{
@@ -99,7 +137,7 @@ const MapEl = ({ searchEl,setSearchEl }) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
       >
-        <img src={selectedPlace?.img} className='w-full h-[150px]' alt="" />
+        <img src={selectedPlace?.img} className="w-full h-[150px]" alt="" />
         <h2>{selectedPlace?.title}</h2>
         <p>{selectedPlace?.cadastralNumber}</p>
         <p>coordinates: {selectedPlace?.coordinates}</p>

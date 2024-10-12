@@ -1,4 +1,4 @@
-import { Exsample, SearchImg, StoryImg } from "../src/assets";
+import { Exsample, Marker, SearchImg, StoryImg } from "../src/assets";
 
 export const data = [
     {
@@ -6,7 +6,7 @@ export const data = [
       img: Exsample,
       coordinates: [55.711572, 37.773856],
       title: "Object 1",
-      icon: SearchImg,
+      icon: Marker,
       cadastralNumber: "69:10:1000021:1758",
       status: "Active",
       landCategory: "Residential",
@@ -21,7 +21,7 @@ export const data = [
       img: Exsample,
       coordinates: [55.622571, 37.373856],
       title: "Object 2",
-      icon: StoryImg,
+      icon: Marker,
       cadastralNumber: "69:10:0000021:1758",
       status: "Inactive",
       landCategory: "Commercial",
@@ -36,7 +36,7 @@ export const data = [
       img: Exsample,
       coordinates: [55.83358, 37.473856],
       title: "Object 3",
-      icon: SearchImg,
+      icon: Marker,
       cadastralNumber: "50:09:0060711:53",
       status: "Active",
       landCategory: "Agricultural",
@@ -51,7 +51,7 @@ export const data = [
       img: Exsample,
       coordinates: [55.704575, 37.573856],
       title: "Object 4",
-      icon: SearchImg,
+      icon: Marker,
       cadastralNumber: "40:13:160704",
       status: "Active",
       landCategory: "Industrial",
@@ -66,7 +66,7 @@ export const data = [
       img: Exsample,
       coordinates: [55.755579, 37.573856],
       title: "Object 5",
-      icon: StoryImg,
+      icon: Marker,
       cadastralNumber: "50:23:0040438:668",
       status: "Inactive",
       landCategory: "Mixed-use",
