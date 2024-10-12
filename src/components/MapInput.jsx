@@ -5,7 +5,7 @@ import { YMaps, Map, Placemark, TypeSelector } from "react-yandex-maps";
 // Modalni qo'llab-quvvatlash uchun ID belgilash
 Modal.setAppElement("#root");
 
-function MapInput() {
+function MapInput({koordinate}) {
   const officeCoordinates = [55.7558, 37.6173]; // Ofis koordinatalari
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null); // Tanlangan koordinata
@@ -43,6 +43,7 @@ function MapInput() {
       <label className="flex flex-col gap-y-1 text-[20px]">
         Адрес доставки
         <input
+          ref={koordinate}
           className="map-input pl-2"
           type="text"
           value={inputValue}

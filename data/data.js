@@ -19,7 +19,7 @@ export const data = [
     {
       id: 2,
       img: Exsample,
-      coordinates: [55.622571, 37.373856],
+      coordinates: [55.62257, 37.37385],
       title: "Object 2",
       icon: Marker,
       cadastralNumber: "69:10:0000021:1758",
