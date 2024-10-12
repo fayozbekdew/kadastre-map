@@ -1,8 +1,37 @@
-import React from "react";
-import { SearchImg, StoryImg } from "../assets";
+import React, { useState } from "react";
+import { data } from "../../data/data";
 import Input from "../components/Input";
+import Modal from "react-modal";
+import { CloseBtn } from "../assets";
+import OTPInput from "react-otp-input";
+import UserPage from "../pages/userPage";
+import { useNavigate } from "react-router-dom";
+Modal.setAppElement("#root");
 
-function Header({ setSearchEl }) {
+function Header({ setSearchEl, setPlaces }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
+  if (otp.length === 6 && otp === "123456") {
+    navigate("/add");
+  }else if(otp.length === 6 && otp !== "123456"){
+    
+  }
+  const openModal = (place) => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+  function selectStatus(stat) {
+    if (stat === "все") {
+      setPlaces(data);
+      return;
+    }
+    const status = data.filter((obg) => obg.status === stat);
+    setPlaces(status);
+  }
   return (
     <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-start justify-center gap-x-2">
       <Input
@@ -12,9 +41,66 @@ function Header({ setSearchEl }) {
         height="50px"
         setSearchEl={setSearchEl}
       />
-      <button className="bg-gray-200 text-white w-[50px] h-[50px] rounded-md flex items-center justify-center">
-        <img src={StoryImg} alt="story img" width={35} height={35} />
+      <select
+        onChange={(e) => selectStatus(e.target.value)}
+        className="bg-gray-200 text-black border border-black pl-1  w-[100px] h-[50px] rounded-md flex items-center justify-center"
+      >
+        <option defaultChecked value="все">
+          Все
+        </option>
+        <option value="ранее учтенний">Ранее учтенний</option>
+        <option value="учтенний">Ранее учтенний</option>
+      </select>
+      <button
+        onClick={() => openModal()}
+        className="bg-gray-200 text-black border border-black pl-1  w-[100px] h-[50px] rounded-md flex items-center justify-center"
+      >
+        Add Object
       </button>
+      <Modal
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "500px",
+            height: "300px",
+            backgroundColor: "gray",
+            borderRadius: "10px",
+            border: "1px solid #ccc",
+            display:'flex',
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.7)", // Modal fon rangini o'zgartirish
+            zIndex: "9999",
+          },
+        }}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+      >
+          <OTPInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={6}
+            renderSeparator={<span></span>}
+            renderInput={(props) => <input className="" {...props} />}
+            inputStyle="!w-[50px] h-[50px] mx-2 border-2 border-gray-300 rounded-md text-center text-lg"
+          />
+          <p className={`${otp.length === 6 && otp !== "123456" ? "block" : "hidden"} text-red-500 absolute bottom-10 text-[20px] font-semibold`}>Kod xato </p>
+        <button onClick={closeModal}>
+          <img
+            src={CloseBtn}
+            width="20px"
+            height={"20px"}
+            className="absolute top-2 right-2"
+          />
+        </button>
+      </Modal>
     </div>
   );
 }

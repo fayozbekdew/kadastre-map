@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
+import { YMaps, Map, Placemark, TypeSelector } from "react-yandex-maps";
 import { CloseBtn, SearchImg, StoryImg } from "../assets";
 import Modal from "react-modal";
 import { data } from "../../data/data";
 
 Modal.setAppElement("#root");
 
-const MapEl = ({ searchEl, setSearchEl }) => {
+const MapEl = ({ searchEl, setSearchEl,places }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [searchObj, setSearchObj] = useState({});
   const [searchList, setSearchList] = useState([]);
   // Obyektlar ma'lumotlari (taxminiy 5 ta obyekt)
-  const [places, setPlaces] = useState(data);
+  
   const [zoom, setZoom] = useState(10);
 
   const handleZoomIn = () => {
@@ -110,6 +110,7 @@ console.log(zoom)
             }}
           />
         ))}
+        <TypeSelector options={{ float: "right" }} />
       </Map>
       <div className="zoom-buttons">
         <button onClick={handleZoomIn}>+</button>

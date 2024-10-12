@@ -1,10 +1,15 @@
+import { Routes,Route } from "react-router-dom"
+import AddObject from "./pages/AddObject"
 import UserPage from "./pages/UserPage"
-import Header from "./sections/Header"
-import MapEl from "./sections/Map"
 
 function App() {
   return (
-    <UserPage/>
+    <Routes>
+      {/* <Route path="/" element={<RootLayout />}> */}
+        <Route  path="/"  element={<UserPage/>} />
+        <Route path="add" element={<AddObject />} />
+      {/* </Route> */}
+    </Routes>
   )
 }
 
