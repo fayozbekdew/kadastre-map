@@ -9,8 +9,7 @@ const MapEl = ({ searchEl, setSearchEl,places }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [searchObj, setSearchObj] = useState({});
-  const [searchList, setSearchList] = useState([]);
+  const [center, setCenter] = useState([55.751574, 37.573856]);
   // Obyektlar ma'lumotlari (taxminiy 5 ta obyekt)
   
   const [zoom, setZoom] = useState(10);
@@ -36,7 +35,8 @@ const MapEl = ({ searchEl, setSearchEl,places }) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setUserLocation([latitude, longitude]); // joylashuvni saqlaymiz
+        setUserLocation([latitude, longitude]);
+        setCenter([latitude, longitude])
       },
       (error) => {
         console.error("Geolocation xatoligi:", error);
@@ -84,7 +84,7 @@ const MapEl = ({ searchEl, setSearchEl,places }) => {
         </div>
       ) : null}
       <Map
-        state={{ center: [55.751574, 37.573856], zoom: zoom }}
+        state={{ center: center, zoom: zoom }}
         className="w-full h-full"
         options={{
             searchControl: 'none',
