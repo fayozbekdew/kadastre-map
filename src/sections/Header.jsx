@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import Modal from "react-modal";
 import { CloseBtn } from "../assets";
@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 Modal.setAppElement("#root");
 
-function Header({ setSearchEl, setPlaces,places,data }) {
+function Header({ setSearchEl, setPlaces, places, data, pass }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  if (otp.length === 6 && otp === "123456") {
+  if (otp.length === 6 && otp === pass) {
     navigate("/add");
-  } else if (otp.length === 6 && otp !== "123456") {
+  } else if (otp.length === 6 && otp !== pass) {
   }
   const openModal = () => {
     setModalIsOpen(true);
@@ -34,7 +34,7 @@ function Header({ setSearchEl, setPlaces,places,data }) {
   return (
     <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-start justify-center gap-x-2">
       <Input
-       places={places}
+        places={places}
         placeholder="Поиск по кадастровому номеру"
         type="text"
         width="1000px"
@@ -50,7 +50,9 @@ function Header({ setSearchEl, setPlaces,places,data }) {
         </option>
         <option value="промышленности">Земли промышленности </option>
         <option value="поселений">земли поселений</option>
-        <option value="сельскохозяйственного">земли сельскохозяйственного назначения </option>
+        <option value="сельскохозяйственного">
+          земли сельскохозяйственного назначения{" "}
+        </option>
       </select>
       <button
         onClick={() => openModal()}
@@ -94,16 +96,16 @@ function Header({ setSearchEl, setPlaces,places,data }) {
         />
         <p
           className={`${
-            otp.length === 6 && otp !== "123456" ? "block" : "hidden"
+            otp.length === 6 && otp !== pass ? "block" : "hidden"
           } text-red-500 absolute bottom-10 text-[20px] font-semibold`}
         >
-          Kod xato{" "}
+          Код ошибки{" "}
         </p>
         <button onClick={closeModal}>
           <img
             src={CloseBtn}
             width="20px"
-            height={"20px"}
+            height="20px"
             className="absolute top-2 right-2"
           />
         </button>
