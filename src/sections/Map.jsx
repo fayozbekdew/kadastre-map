@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { YMaps, Map, Placemark, TypeSelector } from "react-yandex-maps";
 import { CloseBtn, Marker, SearchImg, StoryImg } from "../assets";
 import Modal from "react-modal";
-import { data } from "../../data/data";
 
 Modal.setAppElement("#root");
 

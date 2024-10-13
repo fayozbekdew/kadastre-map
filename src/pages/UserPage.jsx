@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { data } from "../../data/data";
+
 import { supabase } from "../lib/supabaseClient";
 import Header from "../sections/Header";
 import MapEl from "../sections/Map";
@@ -7,6 +7,7 @@ import MapEl from "../sections/Map";
 function UserPage() {
   const [searchEl, setSearchEl] = useState([]);
   const [places, setPlaces] = useState([]);
+  let [DATA, setData] = useState([]); 
   useEffect(() => {
     const fetchObjects = async () => {
       const { data, error } = await supabase.from("objects").select("*");
@@ -15,14 +16,14 @@ function UserPage() {
         console.error("Error fetching objects:", error);
       } else {
         setPlaces(data);
+        setData(data)
       }
     };
     fetchObjects();
   },[])
-  console.log(places)
   return (
     <div className="w-full h-screen">
-      <Header setSearchEl={setSearchEl} setPlaces={setPlaces} places={places} />
+      <Header setSearchEl={setSearchEl} setPlaces={setPlaces} places={places} data={DATA} />
       <MapEl setSearchEl={setSearchEl} searchEl={searchEl} places={places} />
     </div>
   );
