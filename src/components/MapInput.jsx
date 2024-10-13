@@ -6,12 +6,11 @@ import { YMaps, Map, Placemark, TypeSelector } from "react-yandex-maps";
 Modal.setAppElement("#root");
 
 function MapInput({koordinate}) {
-  const officeCoordinates = [55.7558, 37.6173]; // Ofis koordinatalari
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null); // Tanlangan koordinata
   const [inputValue, setInputValue] = useState(""); // Input uchun qiymat
   const [zoomLevel, setZoomLevel] = useState(10); // Zoom darajasi
-
+  const [center, setCenter] = useState([55.751574, 37.573856]);
   // Xarita bosilganda
   const handleMapClick = (event) => {
     const coords = event.get("coords");
@@ -82,14 +81,14 @@ function MapInput({koordinate}) {
         
         <YMaps>
           <Map
-            state={{ center: officeCoordinates, zoom: zoomLevel }} // Zoom darajasini qo'shamiz
+            state={{ center: center, zoom: zoomLevel }} // Zoom darajasini qo'shamiz
             onClick={handleMapClick}
             style={{ width: "100%", height: "100%" }}
             options={{
               zoomControl: "default", // Standart zoom control'ni o'chirib qo'ying
             }}
           >
-            <Placemark coordinates={officeCoordinates} options={{ preset: 'islands#icon', iconColor: '#0095b6' }} />
+            <Placemark coordinates={center} options={{ preset: 'islands#icon', iconColor: '#0095b6' }} />
             {selectedCoordinates && (
               <Placemark 
                 coordinates={selectedCoordinates} 
@@ -99,7 +98,6 @@ function MapInput({koordinate}) {
             <TypeSelector options={{ float: "right" }} />
           </Map>
         </YMaps>
-
         <div className="inline-flex flex-col gap-y-1 absolute top-[50%] right-[20px] translate-y-[-50%]">
           <button
             className="bg-[#c8c8ce] px-2 text-[20px] flex items-center justify-center rounded-sm"
