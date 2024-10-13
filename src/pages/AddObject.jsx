@@ -43,6 +43,7 @@ function AddObject() {
           </span>
         </div>
       </header>
+      
       {activeButton === "newObject" ? <AddObjectForm /> : <EditObjectTable/> }
     </div>
   );

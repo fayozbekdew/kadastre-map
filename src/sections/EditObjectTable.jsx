@@ -15,6 +15,7 @@ function EditObjectTable() {
   const { register, handleSubmit } = useForm();
   const formRef = useRef(null);
   const koordinateRef = useRef(null);
+  const accessCodeRef = useRef(null);
   // Ma'lumotlarni olish
   const fetchObjects = async () => {
     const { data, error } = await supabase.from("objects").select("*"); // Barcha ustunlarni tanlab olish
@@ -71,8 +72,39 @@ function EditObjectTable() {
     formRef.current.reset();
   }
 
+  function updateAccessCode() {
+    supabase
+      .from("password-add")
+      .update({ pass: accessCodeRef.current.value })
+      .eq("id", 2001)
+      .then((res) => {
+        toast("Код доступа обновлен", {
+          type: "success",
+          position: "top-right",
+        });
+        accessCodeRef.current.value = "";
+      })
+      .catch((error) => {
+        console.error("Error updating access code:", error);
+      });
+  }
+
   return (
     <div className="w-full max-w-[1300px] ml-8 mt-5">
+      <div className="flex items-center  gap-2 mb-4 -mt-4">
+        <label className="flex gap-2 text-xl">
+          Обновить код доступа:
+          <input
+            ref={accessCodeRef}
+            type="text"
+            className="border border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </label>
+        <button onClick={updateAccessCode} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          Обновите
+        </button>
+      </div>
+
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
@@ -120,7 +152,7 @@ function EditObjectTable() {
           ) : (
             <tr>
               <td colSpan="8" className="py-2 px-4 border text-center">
-              Данные не найдены
+                Данные не найдены
               </td>
             </tr>
           )}
@@ -303,14 +335,19 @@ function EditObjectTable() {
                     defaultValue={editingObject[0]?.dateApplication}
                   />
                 </label>
-                  <MapInput koordinate={koordinateRef} />
-                
+                <MapInput koordinate={koordinateRef} />
               </div>
             </div>
-            <button type="submit" className="bg-blue-500 text-white p-2 w-full my-2">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 w-full my-2"
+            >
               Saqlash
             </button>
-            <button onClick={closeModal} className="bg-gray-500 text-white p-2 w-full">
+            <button
+              onClick={closeModal}
+              className="bg-gray-500 text-white p-2 w-full"
+            >
               Yopish
             </button>
           </form>
