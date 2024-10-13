@@ -43,7 +43,7 @@ function Header({ setSearchEl, setPlaces,places }) {
     <div className="w-[1300px] absolute z-10  mt-4 max-w-full mx-auto flex items-start justify-center gap-x-2">
       <Input
        places={places}
-        placeholder="Search with kadastre number"
+        placeholder="Поиск по кадастровому номеру"
         type="text"
         width="1000px"
         height="50px"
@@ -63,7 +63,7 @@ function Header({ setSearchEl, setPlaces,places }) {
         onClick={() => openModal()}
         className="bg-gray-200 text-black border border-black pl-1  w-[100px] h-[50px] rounded-md flex items-center justify-center"
       >
-        Add Object
+        новый объект
       </button>
       <Modal
         style={{
