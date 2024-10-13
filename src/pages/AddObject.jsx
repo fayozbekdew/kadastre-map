@@ -2,6 +2,7 @@ import MapInput from "../components/MapInput";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
+import {Link} from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -31,7 +32,7 @@ function AddObject() {
     koorfinate.current.value = null;
   }
   return (
-    <div className="w-[1300px] h-screen flex  p-5">
+    <div className="w-[1300px] h-screen flex flex-col p-5">
       <ToastContainer />
       <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col items-center">
         <div className="flex justify-around w-full">
@@ -163,8 +164,9 @@ function AddObject() {
           
         </div>
         </div>
+        
         <button  className="w-[400px] py-1 outline-none rounded-sm mt-6 text-[20px] font-semibold bg-green-400">
-            Submit
+        Сохранить информацию
           </button>
       </form>
     </div>
