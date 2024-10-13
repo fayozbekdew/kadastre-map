@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Input from "../components/Input";
 import Modal from "react-modal";
 import { CloseBtn } from "../assets";
+import { useEffect } from "react";
 import OTPInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 Modal.setAppElement("#root");
 
-function Header({ setSearchEl, setPlaces,places }) {
+function Header({ setSearchEl, setPlaces,places,data }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
@@ -24,19 +25,10 @@ function Header({ setSearchEl, setPlaces,places }) {
   };
   function selectStatus(stat) {
     if (stat === "все") {
-      const fetchObjects = async () => {
-        const { data, error } = await supabase.from("objects").select("*");
-    
-        if (error) {
-          console.error("Error fetching objects:", error);
-        } else {
-          setPlaces(data);
-        }
-      };
-      fetchObjects();
+      setPlaces(data);
       return;
     }
-    const status = places.filter((obg) => obg.status === stat);
+    const status = data.filter((obg) => obg.category === stat);
     setPlaces(status);
   }
   return (
@@ -56,8 +48,9 @@ function Header({ setSearchEl, setPlaces,places }) {
         <option defaultChecked value="все">
           Все
         </option>
-        <option value="ранее учтенний">Ранее учтенний</option>
-        <option value="учтенний">учтенний</option>
+        <option value="промышленности">Земли промышленности </option>
+        <option value="поселений">земли поселений</option>
+        <option value="сельскохозяйственного">земли сельскохозяйственного назначения </option>
       </select>
       <button
         onClick={() => openModal()}
