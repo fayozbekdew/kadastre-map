@@ -14,7 +14,6 @@ const MapEl = ({ searchEl, setSearchEl,places }) => {
   // Obyektlar ma'lumotlari (taxminiy 5 ta obyekt)
   
   const [zoom, setZoom] = useState(10);
-  console.log(places);
 
   const handleZoomIn = () => {
     setZoom((prevZoom) => Math.min(prevZoom + 1, 18)); // Maksimal zoom darajasi 18

@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabaseClient";
 import Header from "../sections/Header";
 import MapEl from "../sections/Map";
 
-function UserPage() {
+function UserPage({pass}) {
   const [searchEl, setSearchEl] = useState([]);
   const [places, setPlaces] = useState([]);
   let [DATA, setData] = useState([]); 
@@ -23,7 +23,7 @@ function UserPage() {
   },[])
   return (
     <div className="w-full h-screen">
-      <Header setSearchEl={setSearchEl} setPlaces={setPlaces} places={places} data={DATA} />
+      <Header setSearchEl={setSearchEl} setPlaces={setPlaces} places={places} data={DATA} pass={pass} />
       <MapEl setSearchEl={setSearchEl} searchEl={searchEl} places={places} />
     </div>
   );
